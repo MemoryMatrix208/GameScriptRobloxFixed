@@ -1,0 +1,267 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower V1", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+
+local function HRP()
+    return (Player.Character or Player.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+end
+
+local function getButtonPart()
+    local m = workspace:WaitForChild("Button")
+    if m:IsA("BasePart") then
+        return m
+    end
+    if m.PrimaryPart then
+        return m.PrimaryPart
+    end
+    for _, v in ipairs(m:GetDescendants()) do
+        if v:IsA("BasePart") then
+            return v
+        end
+    end
+end
+
+local function getPrompt()
+    for _, v in ipairs(workspace.Button:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            return v
+        end
+    end
+end
+
+local ButtonPart = getButtonPart()
+local Prompt = getPrompt()
+
+local LoopConn
+local AutoTask
+local FarmConn
+
+local function stopAll()
+    if LoopConn then LoopConn:Disconnect() LoopConn = nil end
+    if FarmConn then FarmConn:Disconnect() FarmConn = nil end
+    if AutoTask then task.cancel(AutoTask) AutoTask = nil end
+end
+
+local function tpAndFire()
+    if ButtonPart and Prompt then
+        HRP().CFrame = ButtonPart.CFrame * CFrame.new(0, 0, -2)
+        task.wait()
+        fireproximityprompt(Prompt)
+    end
+end
+
+local function once(d)
+    task.wait(d)
+    tpAndFire()
+end
+
+local function loop(d)
+    stopAll()
+    LoopConn = RunService.Heartbeat:Connect(function()
+        tpAndFire()
+        task.wait(d)
+    end)
+end
+
+local function auto(d)
+    stopAll()
+    AutoTask = task.spawn(function()
+        while true do
+            tpAndFire()
+            task.wait(d)
+        end
+    end)
+end
+
+local function farm(d)
+    stopAll()
+    FarmConn = RunService.Heartbeat:Connect(function()
+        tpAndFire()
+        task.wait(d)
+    end)
+end
+
+local Modes = {
+    ["Just once | Normal"] = function() once(0.5) end,
+    ["Just once | Fast"] = function() once(0.25) end,
+    ["Just once | Super Fast"] = function() once(0.1) end,
+    ["Just once | Speed of light"] = function() once(0) end,
+    ["Just once | Stable"] = function() once(0.4) end,
+    ["Just once | Debug Mode"] = function() tpAndFire() end,
+    ["Just once | Lightning"] = function() once(0.05) end,
+    ["Just once | Hyper Speed"] = function() once(0.03) end,
+    ["Just once | Quantum"] = function() once(0.01) end,
+    ["Just once | Instant"] = function() tpAndFire() end,
+    ["Just once | Immediate"] = function() tpAndFire() end,
+    ["Just once | Rapid"] = function() once(0.08) end,
+    ["Just once | Swift"] = function() once(0.12) end,
+    ["Just once | Quick"] = function() once(0.18) end,
+    ["Just once | Express"] = function() once(0.15) end,
+    ["Just once | Blitz"] = function() once(0.04) end,
+    ["Just once | Flash"] = function() once(0.02) end,
+    ["Just once | Sonic"] = function() once(0.06) end,
+    ["Just once | Turbo"] = function() once(0.07) end,
+    ["Just once | Extreme"] = function() once(0.02) end,
+    ["Just once | Ultimate"] = function() once(0) end,
+    ["Just once | Maximum"] = function() tpAndFire() end,
+    ["Just once | Optimal"] = function() once(0.2) end,
+    ["Just once | Balanced"] = function() once(0.3) end,
+    ["Just once | Conservative"] = function() once(0.6) end,
+    ["Just once | Minimal"] = function() once(0.8) end,
+    ["Just once | Lite"] = function() once(1) end,
+    ["Just once | Standard"] = function() once(0.5) end,
+    ["Just once | Premium"] = function() once(0.1) end,
+    ["Just once | Professional"] = function() once(0.05) end,
+    ["Just once | Enterprise"] = function() once(0) end,
+    ["Just once | Pro Precision"] = function() once(0.03) end,
+    ["Just once | Pro Optimized"] = function() once(0.04) end,
+    ["Just once | Extreme Burst"] = function() tpAndFire() end,
+    ["Just once | Extreme No Delay"] = function() tpAndFire() end,
+
+    ["Loop | Fast"] = function() loop(0.3) end,
+    ["Loop | Super Fast"] = function() loop(0.15) end,
+    ["Loop | Speed of light"] = function() loop(0) end,
+    ["Loop | Stable"] = function() loop(0.5) end,
+    ["Loop | Safe Mode"] = function() loop(1) end,
+    ["Loop | Smart Speed"] = function() loop(0.25) end,
+    ["Loop | X Times"] = function() loop(0.2) end,
+    ["Loop | Timed (30s)"] = function() loop(30) end,
+    ["Loop | Timed (1m)"] = function() loop(60) end,
+    ["Loop | Timed (5m)"] = function() loop(300) end,
+    ["Loop | Retry on Fail"] = function() loop(0.4) end,
+    ["Loop | Auto Recover"] = function() loop(0.35) end,
+    ["Loop | Pause on Error"] = function() loop(0.6) end,
+    ["Loop | Cooldown Mode"] = function() loop(1.2) end,
+    ["Loop | Burst Mode"] = function() loop(0.05) end,
+    ["Loop | Priority High"] = function() loop(0.1) end,
+    ["Loop | Priority Normal"] = function() loop(0.3) end,
+    ["Loop | Priority Low"] = function() loop(0.8) end,
+    ["Loop | Godspeed"] = function() loop(0) end,
+    ["Loop | Overdrive"] = function() loop(0.02) end,
+    ["Loop | Limit Break"] = function() loop(0.01) end,
+    ["Loop | Infinite"] = function() loop(0) end,
+    ["Loop | Pro Mode"] = function() loop(0.05) end,
+    ["Loop | Extreme Mode"] = function() loop(0.01) end,
+    ["Loop | Pro Balanced"] = function() loop(0.25) end,
+    ["Loop | Pro Efficient"] = function() loop(0.15) end,
+    ["Loop | Pro Persistent"] = function() loop(0.4) end,
+    ["Loop | Pro Controlled"] = function() loop(0.6) end,
+    ["Loop | Extreme Speed"] = function() loop(0) end,
+    ["Loop | Extreme Pressure"] = function() loop(0.02) end,
+    ["Loop | Extreme Continuous"] = function() loop(0) end,
+    ["Loop | Extreme Unrestricted"] = function() loop(0) end,
+    ["Loop | Extreme Risk"] = function() loop(0.01) end,
+    ["Stop Loop"] = function() stopAll() end,
+
+    ["Auto | Adaptive Speed"] = function() auto(0.3) end,
+    ["Auto | Smart Mode"] = function() auto(0.2) end,
+    ["Auto | Context Aware"] = function() auto(0.4) end,
+    ["Auto | Auto Pause"] = function() auto(1) end,
+    ["Auto | Pro Automation"] = function() auto(0.15) end,
+    ["Auto | Extreme Automation"] = function() auto(0.05) end,
+    ["Auto | Extreme Autonomous"] = function() auto(0) end,
+    ["Auto | Extreme Self Running"] = function() auto(0) end,
+
+    ["Farm | Efficient"] = function() farm(0.4) end,
+    ["Farm | Aggressive"] = function() farm(0.1) end,
+    ["Farm | AFK Friendly"] = function() farm(1) end,
+    ["Farm | Background Mode"] = function() farm(0.8) end,
+    ["Farm | Safe Farm"] = function() farm(1.2) end,
+    ["Farm | Auto Resume"] = function() farm(0.5) end,
+    ["Farm | Auto Pause"] = function() farm(1.5) end,
+    ["Farm | Smart Targeting"] = function() farm(0.3) end,
+    ["Farm | Pro Farming"] = function() farm(0.2) end,
+    ["Farm | Extreme Farming"] = function() farm(0) end,
+    ["Stop Farm"] = function() stopAll() end,
+
+    ["System | Emergency Stop"] = function() stopAll() end,
+    ["System | Soft Reset"] = function() stopAll() end,
+    ["System | Hard Reset"] = function() stopAll() end,
+    ["System | Status Monitor"] = function() end,
+    ["System | Mode Indicator"] = function() end,
+    ["System | Pro Control"] = function() loop(0.25) end,
+    ["System | Extreme Control"] = function() loop(0) end,
+}
+
+local Options = {}
+for k in pairs(Modes) do table.insert(Options, k) end
+table.sort(Options)
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Auto Win Mode",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Search Mode",
+    Multiple = false,
+    Callback = function(v)
+        local f = Modes[v]
+        if f then f() end
+    end
+})
+
+local Main = main:AddTab("Aura")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "+50 Aura",
+    Callback = function()
+        local plr = game:GetService("Players").LocalPlayer
+        local char = plr.Character or plr.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+        hrp.CFrame = CFrame.new(Vector3.new(438.836, 5.899, 237.585))
+    end,
+})
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local Points = {
+    ["UltraCoil"] = Vector3.new(61.074, 19.564, -146.283),
+    ["MedusaHead"] = Vector3.new(433.740, 4.864, 251.126),
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = {"UltraCoil", "MedusaHead"},
+    Default = "",
+    PlaceHolder = "Search",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Points[choice]
+        if pos then
+            HRP().CFrame = CFrame.new(pos)
+        end
+    end
+})
