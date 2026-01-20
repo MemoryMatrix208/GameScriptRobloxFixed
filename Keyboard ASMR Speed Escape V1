@@ -1,0 +1,161 @@
+local WindUI
+
+do
+    local ok, result = pcall(function()
+        return require("./src/Init")
+    end)
+    
+    if ok then
+        WindUI = result
+    else 
+        WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+    end
+end
+
+
+local Window = WindUI:CreateWindow({
+    Title = "ArchiveXNova Hub",
+    Author = "Welcome",
+    Folder = "Japanese",
+    NewElements = true,
+    HideSearchBar = false,
+    OpenButton = {
+        Title = "Open ArchiveXNova Hub",
+        CornerRadius = UDim.new(1, 0),
+        StrokeThickness = 2,
+        Enabled = true,
+        Draggable = true,
+        Color = ColorSequence.new(Color3.fromRGB(212, 175, 55), Color3.fromRGB(255, 215, 0))
+    }
+})
+
+local MountsSection = Window:Section({
+    Title = "Click",
+})
+
+local MountsTab = MountsSection:Tab({
+    Title = "Keyboard ASMR Speed Escape",
+    Icon = "map-pin",
+})
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local TARGET_POS = Vector3.new(862.503, 1949.800, -324.162)
+
+local teleportLoop = false
+local stopAll = false
+local currentThread
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportOnce()
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function stopAllActions()
+    teleportLoop = false
+    stopAll = true
+    if currentThread then
+        task.cancel(currentThread)
+        currentThread = nil
+    end
+end
+
+local function startLoop(delay, duration)
+    stopAllActions()
+    stopAll = false
+    teleportLoop = true
+
+    currentThread = task.spawn(function()
+        local startTime = tick()
+        while teleportLoop and not stopAll do
+            teleportOnce()
+            if duration and tick() - startTime >= duration then
+                teleportLoop = false
+                break
+            end
+            task.wait(delay)
+        end
+    end)
+end
+
+MountsTab:Dropdown({
+    Title = "Teleport Mode",
+    Desc = "Manual",
+    Values = {
+        "One-Time | Normal",
+        "One-Time | Fast",
+        "One-Time | Super Fast",
+
+        "Loop | Normal",
+        "Loop | Fast",
+        "Loop | Safe",
+        "Loop | Stop",
+
+        "Time | 30 Seconds",
+        "Time | 1 Minute",
+
+        "Stability | Safe Mode",
+        "Performance | Light Mode",
+        "Performance | Normal Mode",
+
+        "AFK | Mode",
+        "System | Stop All"
+    },
+    Max = 1,
+    Callback = function(v)
+        local choice = v[1]
+        if not choice then return end
+
+        if choice == "System | Stop All" then
+            stopAllActions()
+
+        elseif choice == "One-Time | Normal" then
+            stopAllActions()
+            teleportOnce()
+
+        elseif choice == "One-Time | Fast" then
+            stopAllActions()
+            teleportOnce()
+
+        elseif choice == "One-Time | Super Fast" then
+            stopAllActions()
+            teleportOnce()
+
+        elseif choice == "Loop | Normal" then
+            startLoop(1)
+
+        elseif choice == "Loop | Fast" then
+            startLoop(0.3)
+
+        elseif choice == "Loop | Safe" then
+            startLoop(2)
+
+        elseif choice == "Loop | Stop" then
+            stopAllActions()
+
+        elseif choice == "Time | 30 Seconds" then
+            startLoop(0.5, 30)
+
+        elseif choice == "Time | 1 Minute" then
+            startLoop(0.5, 60)
+
+        elseif choice == "Stability | Safe Mode" then
+            startLoop(3)
+
+        elseif choice == "Performance | Light Mode" then
+            startLoop(0)
+
+        elseif choice == "Performance | Normal Mode" then
+            startLoop(0.8)
+
+        elseif choice == "AFK | Mode" then
+            startLoop(0)
+        end
+    end
+})
