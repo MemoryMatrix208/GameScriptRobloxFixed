@@ -1,0 +1,189 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Rocket Escape V1", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+
+local Points = {
+    CFrame.new(-209.848, -364.058, -2585.911),
+    CFrame.new(-209.848, -362.630, -2585.911),
+}
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local LoopConnection
+local Thread
+
+local function stopAll()
+    if LoopConnection then
+        LoopConnection:Disconnect()
+        LoopConnection = nil
+    end
+    if Thread then
+        task.cancel(Thread)
+        Thread = nil
+    end
+end
+
+local function once(delay)
+    stopAll()
+    for _, cf in ipairs(Points) do
+        if delay > 0 then task.wait(delay) end
+        HRP().CFrame = cf
+    end
+end
+
+local function loop(delay)
+    stopAll()
+    LoopConnection = RunService.Heartbeat:Connect(function()
+        for _, cf in ipairs(Points) do
+            HRP().CFrame = cf
+            if delay > 0 then task.wait(delay) end
+        end
+    end)
+end
+
+local function loopTimed(delay, duration)
+    stopAll()
+    Thread = task.spawn(function()
+        local start = os.clock()
+        while os.clock() - start < duration do
+            for _, cf in ipairs(Points) do
+                HRP().CFrame = cf
+                if delay > 0 then task.wait(delay) end
+            end
+        end
+        stopAll()
+    end)
+end
+
+local function farm(delay)
+    stopAll()
+    LoopConnection = RunService.Heartbeat:Connect(function()
+        for _, cf in ipairs(Points) do
+            HRP().CFrame = cf
+            if delay > 0 then task.wait(delay) end
+        end
+    end)
+end
+
+local Modes = {
+
+    
+    ["One-Time | Normal"] = function() once(0.5) end,
+    ["One-Time | Fast"] = function() once(0.25) end,
+    ["One-Time | Super Fast"] = function() once(0.1) end,
+
+    
+    ["Loop | Normal Loop"] = function() loop(0.5) end,
+    ["Loop | Fast Loop"] = function() loop(0.25) end,
+    ["Loop | Safe Loop"] = function() loop(1) end,
+    ["Loop | Stop Loop"] = function() stopAll() end,
+
+    
+    ["Time Mode | Run for 30 seconds"] = function() loopTimed(0.3, 30) end,
+    ["Time Mode | Run for 1 minute"] = function() loopTimed(0.3, 60) end,
+
+    
+    ["Stability | Safe Mode (higher delay)"] = function() loop(1.2) end,
+
+    
+    ["Performance | Light Mode"] = function() loop(0.8) end,
+    ["Performance | Normal Mode"] = function() loop(0.35) end,
+
+    
+    ["AFK / Farm | AFK Mode"] = function() farm(0) end,
+
+    -- SYSTEM
+    ["System | Stop All"] = function() stopAll() end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    table.insert(Options, k)
+end
+table.sort(Options)
+
+MainSection:AddDropdown("TeleportModeDropdown", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        local f = Modes[choice]
+        if f then
+            f()
+        end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Rocket Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Event = ReplicatedStorage.Remotes.Economy.RebirthEvent
+local LoopConn
+
+local function stop()
+	if LoopConn then
+		LoopConn:Disconnect()
+		LoopConn = nil
+	end
+end
+
+local function once()
+	stop()
+	Event:FireServer()
+end
+
+local function loop()
+	stop()
+	LoopConn = RunService.Heartbeat:Connect(function()
+		Event:FireServer()
+	end)
+end
+
+local Modes = {
+	["Normal (Once)"] = once,
+	["Loop"] = loop,
+	["Stop Loop"] = stop,
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+	Title = "Rebirth Mode",
+	Description = "",
+	Options = {"Normal (Once)", "Loop", "Stop Loop"},
+	Default = "",
+	PlaceHolder = "Select Mode",
+	Multiple = false,
+	Callback = function(choice)
+		local f = Modes[choice]
+		if f then
+			f()
+		end
+	end
+})
