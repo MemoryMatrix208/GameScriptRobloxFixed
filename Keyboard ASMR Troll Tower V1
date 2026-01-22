@@ -1,0 +1,88 @@
+local UI = loadstring(game:HttpGet("https://xan.bar/init.lua"))()
+
+if UI.IsMobile then
+    UI.Loading({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2 })
+    task.wait(2.2)
+else
+    UI.Splash({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2.5 })
+    task.wait(2.7)
+end
+
+local Window = UI.New({
+    Title = "ArchiveXNova",
+    Subtitle = "Keyboard ASMR Troll Tower",
+    Theme = "Default",
+    Size = UDim2.new(0, 300, 0, 300),
+    ShowUserInfo = false,
+    ShowSettings = true
+})
+
+local Main = Window:AddTab("Main", UI.Icons.Home)
+
+Main:AddSection("Give Random Tool")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.Remotes.GiveRandomTool
+
+Main:AddButton("Give", function()
+    for tier = 1, 4 do
+        for i = 1, 99 do
+            Event:FireServer("Tier" .. tier)
+            task.wait()
+        end
+    end
+end)
+
+Main:AddSection("Win")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local TARGET_POS = Vector3.new(367.595, 358.245, -558.190)
+
+local looping = false
+
+local function getChar()
+    return player.Character or player.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function killIfExists()
+    local char = player.Character
+    if char then
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = 0
+        end
+    end
+end
+
+Main:AddButton("TP Once", function()
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGET_POS)
+    task.wait(0.1)
+    killIfExists()
+end)
+
+Main:AddButton("TP Loop", function()
+    if looping then return end
+    looping = true
+
+    task.spawn(function()
+        while looping do
+            local hrp = getHRP()
+            hrp.CFrame = CFrame.new(TARGET_POS)
+            task.wait(0.1)
+            killIfExists()
+            player.CharacterAdded:Wait()
+            task.wait(0.2)
+        end
+    end)
+end)
+
+Main:AddButton("Stop Loop", function()
+    looping = false
+end)
