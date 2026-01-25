@@ -1,0 +1,112 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Speed Mode")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Build to Ski V1", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local LocalPlayer = Players.LocalPlayer
+local Remote = ReplicatedStorage.Stitches.StitchesMainRemote
+local RENDER_NAME = "RemoteSpeedOfLight"
+
+local teleportLoop = false
+local currentDelay = 0.3
+local useLight = false
+
+local SpeedMap = {
+    ["Fast"] = 0.3,
+    ["Super Fast"] = 0,
+}
+
+local function fireRemote()
+    Remote:FireServer({
+        EventName = "DownMountain",
+        Data = {},
+        SystemName = "SkiSystem"
+    })
+end
+
+local function stopAll()
+    teleportLoop = false
+    useLight = false
+    RunService:UnbindFromRenderStep(RENDER_NAME)
+end
+
+local function startLightLoop()
+    RunService:BindToRenderStep(RENDER_NAME, Enum.RenderPriority.Character.Value, function()
+        if not teleportLoop then
+            RunService:UnbindFromRenderStep(RENDER_NAME)
+            return
+        end
+        fireRemote()
+    end)
+end
+
+local function startLoop()
+    if useLight then
+        startLightLoop()
+        return
+    end
+
+    task.spawn(function()
+        while teleportLoop do
+            fireRemote()
+            task.wait(currentDelay)
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Down Mountain Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        stopAll()
+        task.wait()
+
+        if choice == "Stop Loop" then
+            return
+        end
+
+        local mode, speed = choice:match("(.+) %| (.+)")
+        if not mode or not speed then return end
+
+        if speed == "Speed of light" then
+            useLight = true
+        else
+            useLight = false
+            currentDelay = SpeedMap[speed] or 0.3
+        end
+
+        if mode == "Normal" then
+            fireRemote()
+        elseif mode == "Loop" then
+            teleportLoop = true
+            startLoop()
+        end
+    end
+})
