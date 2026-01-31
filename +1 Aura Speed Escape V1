@@ -1,0 +1,166 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Aura Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local TARGET = CFrame.new(3843.842, 218.875, 39.487)
+
+local loopActive = false
+local loopConn
+local loopEndTime
+local delayValue = 0.3
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleportOnce(d)
+    stopAll()
+    if d > 0 then task.wait(d) end
+    HRP().CFrame = TARGET
+end
+
+local function startLoop()
+    stopAll()
+    loopActive = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loopActive then return end
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopAll()
+            return
+        end
+        HRP().CFrame = TARGET
+        if delayValue > 0 then task.wait(delayValue) end
+    end)
+end
+
+local Modes = {
+    ["One-Time | Normal"] = function() teleportOnce(0.4) end,
+    ["One-Time | Fast"] = function() teleportOnce(0.15) end,
+    ["One-Time | Super Fast"] = function() teleportOnce(0) end,
+
+    ["Loop | Normal Loop"] = function() delayValue = 0.4 startLoop() end,
+    ["Loop | Fast Loop"] = function() delayValue = 0.15 startLoop() end,
+    ["Loop | Safe Loop"] = function() delayValue = 1 startLoop() end,
+    ["Stop Loop"] = function() stopAll() end,
+
+    ["Time | Run 30 Seconds"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+    end,
+
+    ["Time | Run 1 Minute"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+    end,
+
+    ["Stability | Safe Mode"] = function()
+        delayValue = 1.2
+        startLoop()
+    end,
+
+    ["Performance | Light Mode"] = function()
+        delayValue = 0.6
+        startLoop()
+    end,
+
+    ["Performance | Normal Mode"] = function()
+        delayValue = 0.3
+        startLoop()
+    end,
+
+    ["AFK | AFK Mode"] = function()
+        delayValue = 0
+        startLoop()
+    end,
+
+    ["System | Stop All"] = function()
+        stopAll()
+    end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    Options[#Options + 1] = k
+end
+table.sort(Options)
+
+MainSection:AddDropdown("TeleportController", {
+    Title = "Teleport",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        local f = Modes[choice]
+        if f then f() end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Aura Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local rebirthConn
+
+local function fireRebirth()
+    ReplicatedStorage.Network.Rebirth.AttemptRebirth:FireServer()
+end
+
+MainSection:AddDropdown("RebirthControl", {
+    Title = "Rebirth",
+    Description = "",
+    Options = {"Once", "Loop", "Stop Loop"},
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(selected)
+        if selected == "Once" then
+            fireRebirth()
+
+        elseif selected == "Loop" then
+            if rebirthConn then rebirthConn:Disconnect() end
+            rebirthConn = RunService.Heartbeat:Connect(function()
+                fireRebirth()
+            end)
+
+        elseif selected == "Stop Loop" then
+            if rebirthConn then
+                rebirthConn:Disconnect()
+                rebirthConn = nil
+            end
+        end
+    end
+})
