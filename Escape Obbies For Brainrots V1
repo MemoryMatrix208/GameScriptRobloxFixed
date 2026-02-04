@@ -1,0 +1,338 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%201%20Open%20And%20Close"))()
+
+local window = Library:CreateWindow({
+    Title = "Escape Obbies For Brainrots"
+})
+
+local main = window:Section("Brainrot V1")
+
+main:Button("Auto Pick Up Secret (Once)", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_POS = CFrame.new(155.308, -2.374, 65.037)
+
+    local NPC_NAMES = {
+        "Tralalero Tralala",
+        "Esok Sekolah",
+        "Te Te Te Sahuro",
+        "67",
+        "Los Bros",
+        "La Vacca Saturno Saturnita",
+        "LosTralaleritos",
+        "LosMateos",
+        "Dragon Cannelloni",
+    }
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+    for _, npcName in ipairs(NPC_NAMES) do
+        local npc = npcFolder:FindFirstChild(npcName)
+        if npc then
+            local part = npc:FindFirstChildWhichIsA("BasePart", true)
+            if part then
+                HRP().CFrame = part.CFrame
+                task.wait(0.4)
+
+                local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait()
+                HRP().CFrame = TARGET_POS
+                task.wait(0.4)
+            end
+        end
+    end
+end)
+
+do
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_POS = CFrame.new(155.308, -2.374, 65.037)
+
+    local NPC_NAMES = {
+        "Tralalero Tralala",
+        "Esok Sekolah",
+        "Te Te Te Sahuro",
+        "67",
+        "Los Bros",
+        "La Vacca Saturno Saturnita",
+        "LosTralaleritos",
+        "LosMateos",
+        "Dragon Cannelloni",
+    }
+
+    local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+    local looping = false
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local function runOnce()
+        for _, npcName in ipairs(NPC_NAMES) do
+            if not looping then return end
+
+            local npc = npcFolder:FindFirstChild(npcName)
+            if npc then
+                local part = npc:FindFirstChildWhichIsA("BasePart", true)
+                if part then
+                    HRP().CFrame = part.CFrame
+                    task.wait(0.4)
+
+                    local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait()
+                    HRP().CFrame = TARGET_POS
+                    task.wait(0.4)
+                end
+            end
+        end
+    end
+
+    main:Button("Auto Pick Up Secret (Loop)", function()
+        if looping then return end
+        looping = true
+
+        task.spawn(function()
+            while looping do
+                runOnce()
+                task.wait(0.5)
+            end
+        end)
+    end)
+
+    main:Button("Auto Pick Up Secret (Stop)", function()
+        looping = false
+    end)
+end
+
+local main = window:Section("Brainrot V2")
+
+do
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_POS = CFrame.new(155.308, -2.374, 65.037)
+
+    local NPC_NAMES = {
+        ["Tralalero Tralala"] = true,
+        ["Esok Sekolah"] = true,
+        ["Te Te Te Sahuro"] = true,
+        ["67"] = true,
+        ["Los Bros"] = true,
+        ["La Vacca Saturno Saturnita"] = true,
+        ["LosTralaleritos"] = true,
+        ["LosMateos"] = true,
+        ["Dragon Cannelloni"] = true,
+    }
+
+    local npcFolder = workspace:WaitForChild("NPCSpawned")
+    local running = false
+    local spawnConn
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local function handleNPC(npc)
+        if not NPC_NAMES[npc.Name] then return end
+
+        local part = npc:FindFirstChildWhichIsA("BasePart", true)
+        if not part then return end
+
+        HRP().CFrame = part.CFrame
+        task.wait(0.2)
+
+        local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait()
+        HRP().CFrame = TARGET_POS
+    end
+
+    main:Button("Auto Pick Up Secret (Instant Spawn)", function()
+        if running then return end
+        running = true
+
+        
+        for _, npc in ipairs(npcFolder:GetChildren()) do
+            task.spawn(function()
+                handleNPC(npc)
+            end)
+        end
+
+        
+        spawnConn = npcFolder.ChildAdded:Connect(function(npc)
+            if not running then return end
+            task.wait()
+            handleNPC(npc)
+        end)
+    end)
+
+    main:Button("Auto Pick Up Secret (Stop Instant)", function()
+        running = false
+        if spawnConn then
+            spawnConn:Disconnect()
+            spawnConn = nil
+        end
+    end)
+end
+
+do
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_POS = CFrame.new(155.308, -2.374, 65.037)
+
+    local NPC_NAMES = {
+        ["Tralalero Tralala"] = true,
+        ["Esok Sekolah"] = true,
+        ["Te Te Te Sahuro"] = true,
+        ["67"] = true,
+        ["Los Bros"] = true,
+        ["La Vacca Saturno Saturnita"] = true,
+        ["LosTralaleritos"] = true,
+        ["LosMateos"] = true,
+        ["Dragon Cannelloni"] = true,
+    }
+
+    local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+    local afkRunning = false
+    local AFK_DELAY = 1
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local function collectNPC(npc)
+        if not NPC_NAMES[npc.Name] then return end
+
+        local part = npc:FindFirstChildWhichIsA("BasePart", true)
+        if not part then return end
+
+        HRP().CFrame = part.CFrame
+        task.wait(0.3)
+
+        local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait()
+        HRP().CFrame = TARGET_POS
+        task.wait(0.2)
+    end
+
+    main:Button("Auto Pick Up Secret (AFK Loop)", function()
+        if afkRunning then return end
+        afkRunning = true
+
+        task.spawn(function()
+            while afkRunning do
+                for _, npc in ipairs(npcFolder:GetChildren()) do
+                    if not afkRunning then break end
+                    collectNPC(npc)
+                end
+                task.wait(AFK_DELAY)
+            end
+        end)
+    end)
+
+    main:Button("Auto Pick Up Secret (Stop AFK)", function()
+        afkRunning = false
+    end)
+end
+
+local main = window:Section("Money")
+
+main:Button("Auto Collect", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local world = workspace:WaitForChild("World")
+    local bases = world:WaitForChild("Bases")
+
+    for _, base in ipairs(bases:GetChildren()) do
+        local npcFolder = base:FindFirstChild("NPC")
+        if npcFolder then
+            for _, npc in ipairs(npcFolder:GetChildren()) do
+                local collectButton = npc:FindFirstChild("CollectButton")
+                if collectButton then
+                    local collectPart = collectButton:FindFirstChild("Collect")
+                    if collectPart and collectPart:IsA("BasePart") then
+                        firetouchinterest(HRP(), collectPart, 0)
+                        task.wait()
+                        firetouchinterest(HRP(), collectPart, 1)
+                        task.wait(0.2)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local main = window:Section("Sell All Brainrot")
+
+main:Button("Sell All", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Packages
+        .Knit
+        .Services
+        .SellService
+        .RE
+        .SellAllBrainrot
+
+    Event:FireServer()
+end)
+
+local main = window:Section("Buy Speed")
+
+main:Button("Buy Speed", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Packages
+        .Knit
+        .Services
+        .SpeedService
+        .RE
+        .BuySpeed
+
+    Event:FireServer()
+end)
+
+local main = window:Section("Rebirth")
+
+main:Button("Once", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Packages
+        .Knit
+        .Services
+        .RebirthService
+        .RE
+        .Rebirth
+
+    Event:FireServer()
+end)
