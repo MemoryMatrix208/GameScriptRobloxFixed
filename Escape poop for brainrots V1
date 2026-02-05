@@ -1,0 +1,230 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%201%20Open%20And%20Close"))()
+
+local window = Library:CreateWindow({
+    Title = "Escape poop for brainrots"
+})
+
+local main = window:Section("Brainrot | Secret | Made By ArchiveXNova")
+
+main:Button("Auto Pick up Secret Once", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_CFRAME = CFrame.new(47.523, 6.197, -19.134)
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local decoFolder = workspace
+        :WaitForChild("GameObjectPool")
+        :WaitForChild("Decoration")
+        :FindFirstChild("8")
+
+    if not decoFolder then return end
+
+    
+    local basePart = decoFolder:FindFirstChildWhichIsA("BasePart", true)
+    if not basePart then return end
+
+    
+    HRP().CFrame = basePart.CFrame
+    task.wait(0.1)
+
+    
+    local prompt = decoFolder:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+        task.wait(0.1)
+    end
+
+    
+    HRP().CFrame = TARGET_CFRAME
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local looping = false
+local loopConn
+
+local function HRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+main:Button("Auto Pick up Secret | Fast Loop", function()
+    if looping then
+        stopLoop()
+        return
+    end
+
+    looping = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not looping then return end
+
+        local deco = workspace.GameObjectPool.Decoration:FindFirstChild("8")
+        if not deco then return end
+
+        local part = deco:FindFirstChildWhichIsA("BasePart", true)
+        if not part then return end
+
+        HRP().CFrame = part.CFrame
+        task.wait()
+
+        local prompt = deco:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait()
+    end)
+end)
+
+local main = window:Section("Tp to Safe | Made By ArchiveXNova")
+
+main:Button("Click", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    hrp.CFrame = CFrame.new(39.354, 6.197, -25.375)
+end)
+
+local main = window:Section("Brainrot | Celestial | Made By ArchiveXNova")
+
+main:Button("Auto Pick up Celestial Once", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_CFRAME = CFrame.new(47.523, 6.197, -19.134)
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local decoFolder = workspace
+        :WaitForChild("GameObjectPool")
+        :WaitForChild("Decoration")
+        :FindFirstChild("9")
+
+    if not decoFolder then return end
+
+    
+    local basePart = decoFolder:FindFirstChildWhichIsA("BasePart", true)
+    if not basePart then return end
+
+    
+    HRP().CFrame = basePart.CFrame
+    task.wait(0.1)
+
+    
+    local prompt = decoFolder:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+        task.wait(0.1)
+    end
+
+    
+    HRP().CFrame = TARGET_CFRAME
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local looping = false
+local loopConn
+
+local function HRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+main:Button("Auto Pick up Celestial | Fast Loop", function()
+    if looping then
+        stopLoop()
+        return
+    end
+
+    looping = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not looping then return end
+
+        local deco = workspace.GameObjectPool.Decoration:FindFirstChild("9")
+        if not deco then return end
+
+        local part = deco:FindFirstChildWhichIsA("BasePart", true)
+        if not part then return end
+
+        HRP().CFrame = part.CFrame
+        task.wait()
+
+        local prompt = deco:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait()
+    end)
+end)
+
+local main = window:Section("Sell All Brainrot | Made By ArchiveXNova")
+
+main:Button("Sell All After that Rejoin", function()
+    local Event = game:GetService("ReplicatedStorage").Remote.SellF
+    Event:InvokeServer("SellAll")
+end)
+
+local main = window:Section("Upgrade Base | Made By ArchiveXNova")
+
+main:Button("Upgrade Once Base", function()
+    local Event = game:GetService("ReplicatedStorage").Remote.BaseUpgrade
+    Event:FireServer("Upgrade")
+end)
+
+local main = window:Section("Upgrade Shop | Made By ArchiveXNova")
+
+main:Button("Upgrade Once Carry Up", function()
+    local Event = game:GetService("ReplicatedStorage").Remote.Player
+    Event:FireServer("CarryUp")
+end)
+
+main:Button("Upgrade Once Speed x10", function()
+    local Event = game:GetService("ReplicatedStorage").Remote.Speed
+    Event:FireServer("UpgradeSpeed", 10)
+end)
+
+local main = window:Section("VIP | Made By ArchiveXNova")
+
+main:Button("Remove VIP Walls", function()
+    local wall = workspace:FindFirstChild("\232\181\155\233\129\147")
+    if wall and wall:FindFirstChild("VIPWalls") then
+        wall.VIPWalls:Destroy()
+    end
+end)
