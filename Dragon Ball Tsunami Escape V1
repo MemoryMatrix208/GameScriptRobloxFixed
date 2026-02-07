@@ -1,0 +1,552 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Dragon Ball Tsunami Escape | ArchiveXNova"
+})
+
+local Main = Window:Section("Delete Roof First")
+
+Main:Button("Delete Roof", function()
+    local function sd(p)
+        local o = game
+        local r = p
+
+        while r ~= "" do
+            local d = r:find(".", 1, true)
+            local n
+            if d then
+                n = r:sub(1, d - 1)
+                r = r:sub(d + 1)
+            else
+                n = r
+                r = ""
+            end
+
+            o = o:FindFirstChild(n)
+            if not o then return end
+        end
+
+        if o then
+            o:Destroy()
+        end
+    end
+
+    sd("Workspace.Map.Misc.Roof")
+end)
+
+local Main = Window:Section("Zone")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local POS_A = Vector3.new(5736.798, 71.225, -448.841)
+local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+local loop = false
+local loopConn
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function isAlive()
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+local function doPickup()
+    if not isAlive() then return end
+
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Divine")
+        :WaitForChild("SpawnedItem", 10)
+
+    if not spawnedItem then return end
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end
+
+local function startLoop()
+    if loop then return end
+    loop = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loop then return end
+        if not isAlive() then
+            player.CharacterAdded:Wait()
+            task.wait(1)
+            return
+        end
+        doPickup()
+        task.wait(2)
+    end)
+end
+
+local function stopLoop()
+    loop = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:Button("Divine Pick Up (Once)", function()
+    doPickup()
+end)
+
+Main:Button("Divine Pick Up (AFK Loop)", function()
+    startLoop()
+end)
+
+Main:Button("Stop Divine Loop", function()
+    stopLoop()
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local POS_A = Vector3.new(5131.383, 71.225, -448.147)
+local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+local loop = false
+local loopConn
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function isAlive()
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+local function doPickup()
+    if not isAlive() then return end
+
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Ancient")
+        :WaitForChild("SpawnedItem", 10)
+
+    if not spawnedItem then return end
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end
+
+local function startLoop()
+    if loop then return end
+    loop = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loop then return end
+        if not isAlive() then
+            player.CharacterAdded:Wait()
+            task.wait(1)
+            return
+        end
+        doPickup()
+        task.wait(2)
+    end)
+end
+
+local function stopLoop()
+    loop = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:Button("Ancient Pick Up (Once)", function()
+    doPickup()
+end)
+
+Main:Button("Ancient Pick Up (AFK Loop)", function()
+    startLoop()
+end)
+
+Main:Button("Stop Ancient Loop", function()
+    stopLoop()
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local POS_A = Vector3.new(3882.431, 71.225, -446.253)
+local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+local loop = false
+local loopConn
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function isAlive()
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+local function doPickup()
+    if not isAlive() then return end
+
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Admin")
+        :WaitForChild("SpawnedItem", 10)
+
+    if not spawnedItem then return end
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end
+
+local function startLoop()
+    if loop then return end
+    loop = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loop then return end
+        if not isAlive() then
+            player.CharacterAdded:Wait()
+            task.wait(1)
+            return
+        end
+        doPickup()
+        task.wait(2)
+    end)
+end
+
+local function stopLoop()
+    loop = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:Button("Admin Pick Up (Once)", function()
+    doPickup()
+end)
+
+Main:Button("Admin Pick Up (AFK Loop)", function()
+    startLoop()
+end)
+
+Main:Button("Stop Admin Loop", function()
+    stopLoop()
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local POS_A = Vector3.new(2862.392, 72.225, -447.778)
+local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+local loop = false
+local loopConn
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function isAlive()
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+local function doPickup()
+    if not isAlive() then return end
+
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Secret")
+        :WaitForChild("SpawnedItem", 10)
+
+    if not spawnedItem then return end
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end
+
+local function startLoop()
+    if loop then return end
+    loop = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loop then return end
+        if not isAlive() then
+            player.CharacterAdded:Wait()
+            task.wait(1)
+            return
+        end
+        doPickup()
+        task.wait(2)
+    end)
+end
+
+local function stopLoop()
+    loop = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:Button("Secret Pick Up (Once)", function()
+    doPickup()
+end)
+
+Main:Button("Secret Pick Up (AFK Loop)", function()
+    startLoop()
+end)
+
+Main:Button("Stop Secret Loop", function()
+    stopLoop()
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local POS_A = Vector3.new(2073.948, 69.388, -444.593)
+local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+local loop = false
+local loopConn
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function isAlive()
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+local function doPickup()
+    if not isAlive() then return end
+
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Godly")
+        :WaitForChild("SpawnedItem", 10)
+
+    if not spawnedItem then return end
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end
+
+local function startLoop()
+    if loop then return end
+    loop = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loop then return end
+        if not isAlive() then
+            player.CharacterAdded:Wait()
+            task.wait(1)
+            return
+        end
+        doPickup()
+        task.wait(2)
+    end)
+end
+
+local function stopLoop()
+    loop = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:Button("Godly Pick Up (Once)", function()
+    doPickup()
+end)
+
+Main:Button("Godly Pick Up (AFK Loop)", function()
+    startLoop()
+end)
+
+Main:Button("Stop Godly Loop", function()
+    stopLoop()
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local workspace = game:GetService("Workspace")
+
+    -- cari plot berdasarkan username
+    local plotName = "Plot_" .. player.Name
+    local plot = workspace:FindFirstChild(plotName)
+    if not plot then return end
+
+    for floorIndex = 1, 6 do
+        local floor = plot:FindFirstChild("Floor" .. floorIndex)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for slotIndex = 1, 10 do
+                    local slot = slots:FindFirstChild("Slot" .. slotIndex)
+                    if slot then
+                        local touchPart = slot:FindFirstChild("CollectTouch")
+                        if touchPart and touchPart:IsA("BasePart") then
+                            firetouchinterest(player.Character.HumanoidRootPart, touchPart, 0)
+                            task.wait()
+                            firetouchinterest(player.Character.HumanoidRootPart, touchPart, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Speed Shop")
+
+Main:Button("Buy 10", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PurchaseSpeed
+    Event:FireServer(10)
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell All", function()
+    local Event = game:GetService("ReplicatedStorage").Events.RequestSell
+    Event:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Carry Shop")
+
+Main:Button("Click", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PurchaseCarry
+    Event:FireServer()
+end)
+
+local Main = Window:Section("Base Upgrade")
+
+Main:Button("Click", function()
+    local Event = game:GetService("ReplicatedStorage").Events.RequestBaseUpgrade
+    Event:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local vip = workspace:FindFirstChild("VIP")
+    if vip then
+        vip:Destroy()
+    end
+end)
