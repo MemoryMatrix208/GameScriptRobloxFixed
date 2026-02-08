@@ -1,0 +1,263 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami For Dinosaurs"
+})
+
+local Main = Window:Section("Dinosaurs")
+
+Main:Button("Automatic Pick Up Celestial", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local returnPos = Vector3.new(-15.695, 3.225, 42.515)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Celestial")
+        :WaitForChild("SpawnedItem")
+
+    local basePart = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if basePart then
+        hrp.CFrame = basePart.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+Main:Button("Automatic Pick Up Mythical", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local returnPos = Vector3.new(-15.695, 3.225, 42.515)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Mythical")
+        :WaitForChild("SpawnedItem")
+
+    local basePart = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if basePart then
+        hrp.CFrame = basePart.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+Main:Button("Automatic Pick Up Legendary", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local returnPos = Vector3.new(-15.695, 3.225, 42.515)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Legendary")
+        :WaitForChild("SpawnedItem")
+
+    local basePart = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if basePart then
+        hrp.CFrame = basePart.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+Main:Button("Automatic Pick Up Epic", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local returnPos = Vector3.new(-15.695, 3.225, 42.515)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Epic")
+        :WaitForChild("SpawnedItem")
+
+    local basePart = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if basePart then
+        hrp.CFrame = basePart.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+Main:Button("Automatic Pick Up Rare", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local returnPos = Vector3.new(-15.695, 3.225, 42.515)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Rare")
+        :WaitForChild("SpawnedItem")
+
+    local basePart = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if basePart then
+        hrp.CFrame = basePart.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = HRP()
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot then return end
+
+    for floorIndex = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. floorIndex)
+        if floor then
+            local slotsFolder = floor:FindFirstChild("Slots")
+            if slotsFolder then
+                for slotIndex = 1, 10 do
+                    local slot = slotsFolder:FindFirstChild("Slot" .. slotIndex)
+                    if slot then
+                        local collect = slot:FindFirstChild("CollectTouch")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            task.wait()
+                            firetouchinterest(hrp, collect, 1)
+                            task.wait(0.05)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Upgrade Base", function()
+    game:GetService("ReplicatedStorage")
+        .Events
+        .RequestBaseUpgrade
+        :FireServer()
+end)
+
+Main:Button("Buy Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Buy Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Buy Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseCarry:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("VIP & Tsunamis")
+
+Main:Button("Remove Door VIP & Tsunamis", function()
+    if workspace:FindFirstChild("VIP") then
+        workspace.VIP:Destroy()
+    end
+
+    if workspace:FindFirstChild("Tsunamis") then
+        workspace.Tsunamis:Destroy()
+    end
+end)
