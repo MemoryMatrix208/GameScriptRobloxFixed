@@ -1,0 +1,621 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Getting Crushed For Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Crushers First")
+
+Main:Button("Remove Crushers", function()
+    local folder = workspace:FindFirstChild("Crushers")
+    if not folder then return end
+
+    for _, v in ipairs(folder:GetChildren()) do
+        v:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tora Isme")
+
+Main:Button("Click", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/refs/heads/main/EscapeGettingCrushedForBrainrots",true))()
+end)
+
+local Main = Window:Section("Brainrots V1")
+
+Main:Button("Auto Pick Up Once", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(44.977, 54.100, 45.294)
+
+    local model = workspace
+        :WaitForChild("EntitiesFolder")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    hrp.CFrame = part.CFrame
+    task.wait(0.25)
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+do
+    local running = false
+    local delayTime = 0.5
+
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local backPos = Vector3.new(44.977, 54.100, 45.294)
+
+    local function run()
+        task.spawn(function()
+            while running do
+                local char = player.Character or player.CharacterAdded:Wait()
+                local hrp = char:WaitForChild("HumanoidRootPart")
+
+                local model = workspace
+                    :FindFirstChild("EntitiesFolder")
+                    and workspace.EntitiesFolder:FindFirstChildWhichIsA("Model")
+
+                if model then
+                    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+                    if part then
+                        hrp.CFrame = part.CFrame
+                        task.wait(0.1)
+
+                        local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+                        if prompt then
+                            fireproximityprompt(prompt)
+                        end
+
+                        task.wait(0.1)
+                        hrp.CFrame = CFrame.new(backPos)
+                    end
+                end
+
+                task.wait(delayTime)
+            end
+        end)
+    end
+
+    
+    Main:Button("Auto Pick Up Loop | Normal", function()
+        running = false
+        task.wait()
+        delayTime = 0.5
+        running = true
+        run()
+    end)
+
+    Main:Button("Stop Loop (Normal)", function()
+        running = false
+    end)
+
+    
+    Main:Button("Auto Pick Up Loop | Fast", function()
+        running = false
+        task.wait()
+        delayTime = 0.25
+        running = true
+        run()
+    end)
+
+    Main:Button("Stop Loop (Fast)", function()
+        running = false
+    end)
+
+    
+    Main:Button("Auto Pick Up Loop | Super Fast", function()
+        running = false
+        task.wait()
+        delayTime = 0.05
+        running = true
+        run()
+    end)
+
+    Main:Button("Stop Loop (Super Fast)", function()
+        running = false
+    end)
+end
+
+local Main = Window:Section("Brainrots V2")
+
+Main:Button("Auto Pick Up Golden", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local original = hrp.CFrame
+    local targetPos = Vector3.new(44.977,54.100,45.294)
+
+    hrp.CFrame = CFrame.new(targetPos)
+    task.wait(0.3)
+
+    local folder = workspace:FindFirstChild("EntitiesFolder")
+    if not folder then
+        hrp.CFrame = original
+        return
+    end
+
+    local golden = folder:FindFirstChild("Golden")
+    if not golden then
+        hrp.CFrame = original
+        return
+    end
+
+    local part = golden:IsA("Model") and (golden.PrimaryPart or golden:FindFirstChildWhichIsA("BasePart", true)) or golden
+    if part and part:IsA("BasePart") then
+        hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+        task.wait(0.2)
+    end
+
+    local prompt = golden:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = original
+end)
+
+local loopState = false
+
+Main:Button("Auto Pick Up Golden Loop Fast", function()
+    if loopState then return end
+    loopState = true
+
+    task.spawn(function()
+        while loopState do
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local original = hrp.CFrame
+            local targetPos = Vector3.new(44.977,54.100,45.294)
+
+            hrp.CFrame = CFrame.new(targetPos)
+            task.wait(0.25)
+
+            local folder = workspace:FindFirstChild("EntitiesFolder")
+            if folder then
+                local golden = folder:FindFirstChild("Golden")
+                if golden then
+                    local part = golden:IsA("Model") and (golden.PrimaryPart or golden:FindFirstChildWhichIsA("BasePart", true)) or golden
+                    if part and part:IsA("BasePart") then
+                        hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+                        task.wait(0.1)
+                    end
+
+                    local prompt = golden:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+                end
+            end
+
+            task.wait(0.25)
+            hrp.CFrame = original
+            task.wait(0.5)
+        end
+    end)
+end)
+
+Main:Button("Auto Pick Up Golden Loop Super Fast", function()
+    if loopState then return end
+    loopState = true
+
+    task.spawn(function()
+        while loopState do
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local original = hrp.CFrame
+            local targetPos = Vector3.new(44.977,54.100,45.294)
+
+            hrp.CFrame = CFrame.new(targetPos)
+            task.wait(0.25)
+
+            local folder = workspace:FindFirstChild("EntitiesFolder")
+            if folder then
+                local golden = folder:FindFirstChild("Golden")
+                if golden then
+                    local part = golden:IsA("Model") and (golden.PrimaryPart or golden:FindFirstChildWhichIsA("BasePart", true)) or golden
+                    if part and part:IsA("BasePart") then
+                        hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+                        task.wait(0.05)
+                    end
+
+                    local prompt = golden:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+                end
+            end
+
+            task.wait(0.1)
+            hrp.CFrame = original
+            task.wait(0.2)
+        end
+    end)
+end)
+
+Main:Button("Stop Loop", function()
+    loopState = false
+end)
+
+local loopStateDiamond = false
+
+Main:Button("Auto Pick Up Once Diamond", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local original = hrp.CFrame
+    local targetPos = Vector3.new(44.977,54.100,45.294)
+
+    hrp.CFrame = CFrame.new(targetPos)
+    task.wait(0.25)
+
+    local folder = workspace:FindFirstChild("EntitiesFolder")
+    if folder then
+        local diamond = folder:FindFirstChild("Diamond")
+        if diamond then
+            local part = diamond:IsA("Model") and (diamond.PrimaryPart or diamond:FindFirstChildWhichIsA("BasePart", true)) or diamond
+            if part and part:IsA("BasePart") then
+                hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+                task.wait(0.1)
+            end
+
+            local prompt = diamond:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+        end
+    end
+
+    task.wait(0.2)
+    hrp.CFrame = original
+end)
+
+Main:Button("Auto Pick Up Loop Fast Diamond", function()
+    if loopStateDiamond then return end
+    loopStateDiamond = true
+
+    task.spawn(function()
+        while loopStateDiamond do
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local original = hrp.CFrame
+            local targetPos = Vector3.new(44.977,54.100,45.294)
+
+            hrp.CFrame = CFrame.new(targetPos)
+            task.wait(0.25)
+
+            local folder = workspace:FindFirstChild("EntitiesFolder")
+            if folder then
+                local diamond = folder:FindFirstChild("Diamond")
+                if diamond then
+                    local part = diamond:IsA("Model") and (diamond.PrimaryPart or diamond:FindFirstChildWhichIsA("BasePart", true)) or diamond
+                    if part and part:IsA("BasePart") then
+                        hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+                        task.wait(0.1)
+                    end
+
+                    local prompt = diamond:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+                end
+            end
+
+            task.wait(0.25)
+            hrp.CFrame = original
+            task.wait(0.5)
+        end
+    end)
+end)
+
+Main:Button("Auto Pick Up Loop Super Fast Diamond", function()
+    if loopStateDiamond then return end
+    loopStateDiamond = true
+
+    task.spawn(function()
+        while loopStateDiamond do
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local original = hrp.CFrame
+            local targetPos = Vector3.new(44.977,54.100,45.294)
+
+            hrp.CFrame = CFrame.new(targetPos)
+            task.wait(0.25)
+
+            local folder = workspace:FindFirstChild("EntitiesFolder")
+            if folder then
+                local diamond = folder:FindFirstChild("Diamond")
+                if diamond then
+                    local part = diamond:IsA("Model") and (diamond.PrimaryPart or diamond:FindFirstChildWhichIsA("BasePart", true)) or diamond
+                    if part and part:IsA("BasePart") then
+                        hrp.CFrame = part.CFrame + Vector3.new(0,2,0)
+                        task.wait(0.05)
+                    end
+
+                    local prompt = diamond:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+                end
+            end
+
+            task.wait(0.1)
+            hrp.CFrame = original
+            task.wait(0.2)
+        end
+    end)
+end)
+
+Main:Button("Stop Loop", function()
+    loopStateDiamond = false
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase Base Upgrade", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .PurchaseUpgrade
+
+    Event:FireServer("StandUpgrade")
+end)
+
+Main:Button("Purchase Grab Upgrade", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .PurchaseUpgrade
+
+    Event:FireServer("GrabUpgrade")
+end)
+
+Main:Button("Purchase Speed +1", function()
+    game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .PurchaseUpgrade
+        :FireServer("1")
+end)
+
+Main:Button("Purchase Speed +5", function()
+    game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .PurchaseUpgrade
+        :FireServer("5")
+end)
+
+Main:Button("Purchase Speed +10", function()
+    game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .PurchaseUpgrade
+        :FireServer("10")
+end)
+
+local Main = Window:Section("Sell")
+
+Main:Button("Sell All", function()
+    game:GetService("ReplicatedStorage")
+        .Utilities
+        .TypedRemote
+        .SellRemote
+        :InvokeServer("SellAll")
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local map = workspace:FindFirstChild("Map")
+    if not map then return end
+
+    local stages = map:FindFirstChild("Stages")
+    if not stages then return end
+
+    local paidArea = stages:FindFirstChild("PaidArea")
+    if paidArea then
+        paidArea:Destroy()
+    end
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money Once", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    
+    for _, template in ipairs(plots:GetChildren()) do
+        if template:IsA("Model") and template:FindFirstChild("Floors") then
+            local floors = template.Floors
+
+            
+            for f = 0, 3 do
+                local floor = floors:FindFirstChild("Floor" .. f)
+                if floor and floor:FindFirstChild("Stands") then
+                    for s = 1, 10 do
+                        local stand = floor.Stands:FindFirstChild(tostring(s))
+                        if stand then
+                            local cashModel = stand:FindFirstChild("CashModel")
+                            if cashModel then
+                                local touchPart = cashModel:FindFirstChild("TouchPart")
+                                if touchPart and touchPart:IsA("BasePart") then
+                                    firetouchinterest(hrp, touchPart, 0)
+                                    firetouchinterest(hrp, touchPart, 1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local AutoCollect = false
+
+Main:Button("Auto Collect Money | Loop", function()
+    AutoCollect = not AutoCollect
+
+    if not AutoCollect then return end
+
+    task.spawn(function()
+        while AutoCollect do
+            local player = game:GetService("Players").LocalPlayer
+            local char = player.Character
+            if not char then
+                task.wait(1)
+                continue
+            end
+
+            local hrp = char:FindFirstChild("HumanoidRootPart")
+            if not hrp then
+                task.wait(1)
+                continue
+            end
+
+            local plots = workspace:FindFirstChild("Plots")
+            if plots then
+                for _, template in ipairs(plots:GetChildren()) do
+                    if template:IsA("Model") and template:FindFirstChild("Floors") then
+                        for f = 0, 3 do
+                            local floor = template.Floors:FindFirstChild("Floor" .. f)
+                            if floor and floor:FindFirstChild("Stands") then
+                                for s = 1, 10 do
+                                    local stand = floor.Stands:FindFirstChild(tostring(s))
+                                    if stand then
+                                        local cashModel = stand:FindFirstChild("CashModel")
+                                        if cashModel then
+                                            local touchPart = cashModel:FindFirstChild("TouchPart")
+                                            if touchPart and touchPart:IsA("BasePart") then
+                                                firetouchinterest(hrp, touchPart, 0)
+                                                firetouchinterest(hrp, touchPart, 1)
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            task.wait(0.5)
+        end
+    end)
+end)
+
+local Main = Window:Section("Map")
+
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+local function tp(pos)
+    local char = lp.Character or lp.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+local locations = {
+    Secret     = Vector3.new(-3558.741, 54.108, -18.435),
+    OG     = Vector3.new(-3894.583, 54.108, -0.322),
+    Cosmic     = Vector3.new(-2812.134, 54.108, -10.889),
+    Mythical   = Vector3.new(-2021.653, 54.108, -2.882),
+    Legendary  = Vector3.new(-1219.348, 54.108, 1.241),
+    Home  = Vector3.new(44.977, 54.100, 45.294),
+    Epic       = Vector3.new(-831.207, 54.108, -0.476),
+}
+
+for name, pos in pairs(locations) do
+    Main:Button("TP " .. name, function()
+        tp(pos)
+    end)
+end
+
+local Main = Window:Section("Player")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function setSpeed(mult)
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 16 * mult
+end
+
+Main:Button("Speed 100%", function()
+    setSpeed(1)
+end)
+
+Main:Button("Speed 200%", function()
+    setSpeed(2)
+end)
+
+Main:Button("Speed 300%", function()
+    setSpeed(3)
+end)
+
+Main:Button("Speed 400%", function()
+    setSpeed(4)
+end)
+
+Main:Button("Speed 500%", function()
+    setSpeed(5)
+end)
+
+Main:Button("Speed 600%", function()
+    setSpeed(6)
+end)
+
+Main:Button("Speed 700%", function()
+    setSpeed(7)
+end)
+
+Main:Button("Speed 800%", function()
+    setSpeed(8)
+end)
+
+Main:Button("Speed 900%", function()
+    setSpeed(9)
+end)
+
+Main:Button("Back to Normal", function()
+    setSpeed(1)
+end)
