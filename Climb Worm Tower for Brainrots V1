@@ -1,0 +1,170 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Climb Worm Tower for Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrot")
+
+Main:Button("TP Plot", function()
+    game:GetService("ReplicatedStorage")["shared/network/GlobalEvents@GlobalEvents"].TeleportToPlotRequest:FireServer()
+end)
+
+Main:Button("TP BrainrotGod 1", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-405.945,1095.826,-429.814)
+end)
+
+Main:Button("TP BrainrotGod 2", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-408.909,1358.826,-427.123)
+end)
+
+Main:Button("TP Mythic", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-395.643,877.826,-429.431)
+end)
+
+Main:Button("TP Legendary", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-404.746,702.826,-428.086)
+end)
+
+Main:Button("TP Epic", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-393.007,527.826,-442.141)
+end)
+
+Main:Button("TP Rare", function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-382.434,364.826,-430.155)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local world = workspace:FindFirstChild("World")
+    if not world then return end
+
+    local plots = world:FindFirstChild("Plots")
+    if not plots then return end
+
+    for _, plot in ipairs(plots:GetChildren()) do
+        if plot:IsA("Model") and plot:FindFirstChild("Floors") then
+            for _, floor in ipairs(plot.Floors:GetChildren()) do
+                if floor:IsA("Model") and floor:FindFirstChild("Stands") then
+                    for i = 1, 10 do
+                        local stand = floor.Stands:FindFirstChild(tostring(i))
+                        if stand then
+                            local button = stand:FindFirstChild("Button")
+                            if button then
+                                local main = button:FindFirstChild("Main")
+                                if main and main:IsA("BasePart") then
+                                    firetouchinterest(hrp, main, 0)
+                                    firetouchinterest(hrp, main, 1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage")["shared/network/GlobalEvents@GlobalEvents"].CarryPurchaseRequest:FireServer()
+end)
+
+local Main = Window:Section("Sell")
+
+Main:Button("Sell All", function()
+    game:GetService("ReplicatedStorage")["shared/network/GlobalEvents@GlobalEvents"].CharacterItemSellAllRequest:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage")["shared/network/GlobalEvents@GlobalEvents"].RebirthRequest:FireServer()
+end)
+
+local Main = Window:Section("Gear")
+
+Main:Button("TP Gear Shop", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-439.165, 4.042, -421.443)
+end)
+
+local Main = Window:Section("Taser")
+
+local taserLoop = false
+
+Main:Button("Auto Taser | Loop", function()
+    taserLoop = true
+    task.spawn(function()
+        local event = game:GetService("ReplicatedStorage")["shared/network/GlobalEvents@GlobalEvents"].ItemUseRequest
+        while taserLoop do
+            local players = game:GetService("Players"):GetPlayers()
+            for _ = 1, #players do
+                event:FireServer("Taser", 1)
+            end
+            task.wait(0.2)
+        end
+    end)
+end)
+
+Main:Button("Stop Loop Taser", function()
+    taserLoop = false
+end)
+
+local Main = Window:Section("Lucky Block")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+
+local function getFolder()
+    return workspace:WaitForChild("World")
+        :WaitForChild("Lobby")
+        :WaitForChild("LuckyBlocks")
+end
+
+local function fireClicks()
+    local folder = getFolder()
+
+    for i = 1, 99 do
+        local model = folder:FindFirstChild(tostring(i))
+        if model and model:IsA("Model") then
+            
+            local click = model:FindFirstChildWhichIsA("ClickDetector", true)
+            if click then
+                fireclickdetector(click)
+                task.wait(0.1)
+            end
+
+        end
+    end
+end
+
+Main:Button("Auto Lucky Block | Once", function()
+    fireClicks()
+end)
+
+Main:Button("Auto Lucky Block | Loop", function()
+    if running then return end
+    running = true
+
+    task.spawn(function()
+        while running do
+            fireClicks()
+            task.wait(1)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
