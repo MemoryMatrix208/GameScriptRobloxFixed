@@ -1,0 +1,264 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami on Bike for Lucky Blocks | ArchiveXNova"
+})
+
+local Main = Window:Section("Blocks")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+local returnPosition = CFrame.new(43.745, 53.990, 24.402)
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function execute()
+    local root = getRoot()
+    local folder = workspace:WaitForChild("EntitiesFolder")
+    local part = folder:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        root.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+        task.wait(0.25)
+
+        for _, v in pairs(folder:GetDescendants()) do
+            if v:IsA("ProximityPrompt") then
+                fireproximityprompt(v)
+                task.wait(0.25)
+            end
+        end
+
+        task.wait(0.25)
+        root.CFrame = returnPosition
+    end
+end
+
+Main:Button("Auto Blocks | Once", function()
+    execute()
+end)
+
+Main:Button("Auto Blocks | Loop", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            execute()
+            task.wait(1)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function execute()
+    local root = getRoot()
+    local plots = workspace:WaitForChild("Plots")
+
+    for _, plot in ipairs(plots:GetChildren()) do
+        if plot:IsA("Model") then
+
+            local floors = plot:FindFirstChild("Floors")
+            if floors then
+
+                for f = 0, 2 do
+                    local floor = floors:FindFirstChild("Floor" .. f)
+                    if floor then
+
+                        local stands = floor:FindFirstChild("Stands")
+                        if stands then
+
+                            for s = 1, 10 do
+                                local stand = stands:FindFirstChild(tostring(s))
+                                if stand then
+
+                                    local cash = stand:FindFirstChild("CashModel")
+                                    if cash then
+
+                                        local touchPart = cash:FindFirstChild("TouchPart")
+                                        if touchPart then
+                                            firetouchinterest(root, touchPart, 0)
+                                            firetouchinterest(root, touchPart, 1)
+                                            task.wait(0.05)
+                                        end
+
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+
+            end
+        end
+    end
+end
+
+Main:Button("Auto Collect | Once", function()
+    execute()
+end)
+
+Main:Button("Auto Collect | Loop", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            execute()
+            task.wait(1)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Utilities")
+    :WaitForChild("TypedRemote")
+    :WaitForChild("PurchaseUpgrade")
+
+Main:Button("Purchase Speed +1", function()
+    Event:FireServer("1")
+end)
+
+Main:Button("Purchase Speed +5", function()
+    Event:FireServer("5")
+end)
+
+Main:Button("Purchase Speed +10", function()
+    Event:FireServer("10")
+end)
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Utilities")
+    :WaitForChild("TypedRemote")
+    :WaitForChild("PurchaseUpgrade")
+
+Main:Button("Purchase Carry", function()
+    Event:FireServer("GrabUpgrade")
+end)
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Utilities")
+    :WaitForChild("TypedRemote")
+    :WaitForChild("PurchaseUpgrade")
+
+Main:Button("Purchase Base Upgrade", function()
+    Event:FireServer("StandUpgrade")
+end)
+
+local Main = Window:Section("Sell")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Utilities")
+    :WaitForChild("TypedRemote")
+    :WaitForChild("SellRemote")
+
+Main:Button("Sell All", function()
+    Event:InvokeServer("SellAll")
+end)
+
+local Main = Window:Section("Rebirth")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Utilities")
+    :WaitForChild("TypedRemote")
+    :WaitForChild("Rebirth")
+
+Main:Button("Click", function()
+    Event:InvokeServer()
+end)
+
+local Main = Window:Section("Tsunami")
+
+local running = false
+
+Main:Button("Remove Tsunami | Loop", function()
+    if running then return end
+    running = true
+
+    task.spawn(function()
+        while running do
+            local names = {"Slow", "SuperSlow", "Medium", "Hard"}
+            for _, name in ipairs(names) do
+                local obj = workspace:FindFirstChild(name)
+                if obj then
+                    obj:Destroy()
+                end
+            end
+            task.wait(1)
+        end
+    end)
+end)
+
+Main:Button("Stop Remove Tsunami", function()
+    running = false
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local stages = workspace:WaitForChild("Map"):WaitForChild("Stages")
+
+    for i = 1, 7 do
+        local area = stages:FindFirstChild("PaidArea" .. i)
+        if area then
+            area:Destroy()
+        end
+    end
+end)
+
+local Main = Window:Section("Map")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function tp(pos)
+    getRoot().CFrame = CFrame.new(pos)
+end
+
+Main:Button("Home", function()
+    tp(Vector3.new(43.745, 53.990, 24.402))
+end)
+
+Main:Button("Secret", function()
+    tp(Vector3.new(-2886.355, 54.532, 2.067))
+end)
+
+Main:Button("Mythical", function()
+    tp(Vector3.new(-1124.816, 54.532, 2.017))
+end)
+
+Main:Button("Legendary", function()
+    tp(Vector3.new(-727.266, 54.532, 2.067))
+end)
+
+Main:Button("Cosmic", function()
+    tp(Vector3.new(-1630.915, 54.532, 2.067))
+end)
