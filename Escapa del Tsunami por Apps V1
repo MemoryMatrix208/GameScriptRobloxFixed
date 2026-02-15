@@ -1,0 +1,161 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escapa del Tsunami por Apps | ArchiveXNova"
+})
+
+local Main = Window:Section("Apps")
+
+Main:Button("Auto Creator", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local posAwal = Vector3.new(19.685, 153.414, 1053.708)
+    local posAkhir = Vector3.new(-22.874, 153.415, -984.734)
+
+    hrp.CFrame = CFrame.new(posAwal)
+    task.wait(1)
+
+    local spawnedItem = workspace.ItemSpawners.Creator:WaitForChild("SpawnedItem")
+    hrp.CFrame = spawnedItem:GetPivot()
+    task.wait(1)
+
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        local oldHold = prompt.HoldDuration
+        prompt.HoldDuration = 0
+        fireproximityprompt(prompt)
+        prompt.HoldDuration = oldHold
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(posAkhir)
+
+end)
+
+local Main = Window:Section("Money")
+
+local CollectLoop = false
+
+Main:Button("Auto Collect | Once", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot then return end
+
+    for floorIndex = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. floorIndex)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for slotIndex = 1, 10 do
+                    local slot = slots:FindFirstChild("Slot" .. slotIndex)
+                    if slot then
+                        local touchPart = slot:FindFirstChild("CollectTouch")
+                        if touchPart then
+                            firetouchinterest(hrp, touchPart, 0)
+                            firetouchinterest(hrp, touchPart, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+end)
+
+Main:Button("Auto Collect | Loop", function()
+
+    CollectLoop = true
+
+    task.spawn(function()
+        while CollectLoop do
+
+            local player = game.Players.LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+            if plot then
+                for floorIndex = 1, 3 do
+                    local floor = plot:FindFirstChild("Floor" .. floorIndex)
+                    if floor then
+                        local slots = floor:FindFirstChild("Slots")
+                        if slots then
+                            for slotIndex = 1, 10 do
+                                local slot = slots:FindFirstChild("Slot" .. slotIndex)
+                                if slot then
+                                    local touchPart = slot:FindFirstChild("CollectTouch")
+                                    if touchPart then
+                                        firetouchinterest(hrp, touchPart, 0)
+                                        firetouchinterest(hrp, touchPart, 1)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            task.wait(1)
+
+        end
+    end)
+
+end)
+
+Main:Button("Auto Collect | Stop", function()
+    CollectLoop = false
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    game:GetService("ReplicatedStorage").Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local folder = workspace:FindFirstChild("VIP")
+    if folder then
+        folder:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis", function()
+    local folder = workspace:FindFirstChild("Tsunamis")
+    if folder then
+        folder:Destroy()
+    end
+end)
