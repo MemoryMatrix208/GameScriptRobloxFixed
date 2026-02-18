@@ -1,0 +1,473 @@
+local WindUI
+
+do
+    local ok, result = pcall(function()
+        return require("./src/Init")
+    end)
+    
+    if ok then
+        WindUI = result
+    else 
+        WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+    end
+end
+
+
+local Window = WindUI:CreateWindow({
+    Title = "ArchiveXNova",
+    Author = "+1 Aura Speed Escape",
+    Folder = "Japanese",
+    NewElements = true,
+    HideSearchBar = false,
+    OpenButton = {
+        Title = "Open ArchiveXNova",
+        CornerRadius = UDim.new(1, 0),
+        StrokeThickness = 2,
+        Enabled = true,
+        Draggable = true,
+        Color = ColorSequence.new(Color3.fromRGB(212, 175, 55), Color3.fromRGB(255, 215, 0))
+    }
+})
+
+local MountsSection = Window:Section({
+    Title = "CheckPoint",
+})
+
+local MountsTab = MountsSection:Tab({
+    Title = "Auto CheckPoint",
+    Icon = "map-pin",
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+
+local Player = Players.LocalPlayer
+
+-- ===== ROUTE =====
+local Targets = {
+    Vector3.new(1132.918, 152.160, 21.852),
+    Vector3.new(1320.807, 151.532, 23.124),
+    Vector3.new(1435.167, 206.452, 21.150),
+    Vector3.new(1579.217, 164.035, 23.299),
+    Vector3.new(1608.142, 151.532, 2.599),
+    Vector3.new(1743.067, 224.063, -40.161),
+    Vector3.new(1911.728, 212.134, 21.689),
+    Vector3.new(2060.707, 212.428, 16.156),
+    Vector3.new(2111.916, 258.084, -35.482),
+    Vector3.new(2262.176, 256.264, -30.770),
+    Vector3.new(2315.799, 212.832, 14.640),
+    Vector3.new(2666.747, 212.930, 21.478),
+    Vector3.new(2739.014, 244.165, 21.836),
+    Vector3.new(3096.655, 212.674, 22.105),
+    Vector3.new(3164.868, 257.471, 16.710),
+    Vector3.new(3313.823, 212.493, 26.488),
+    Vector3.new(3437.344, 267.290, -30.529),
+    Vector3.new(3618.228, 267.290, -29.313),
+    Vector3.new(3703.675, 212.439, 21.262),
+    Vector3.new(4270.053, 212.358, 25.953),
+    Vector3.new(4457.003, 263.026, -47.192),
+    Vector3.new(4649.025, 213.000, 23.515),
+    Vector3.new(4696.910, 259.434, 85.575),
+    Vector3.new(4976.613, 252.769, 68.806),
+    Vector3.new(4990.470, 213.134, 51.477)
+}
+
+-- ===== CONFIG =====
+local loopActive = false
+local loopEndTime = nil
+local delayValue = 5
+local tweenSpeed = 100
+local routeCooldown = 3
+
+-- ===== INTERNAL =====
+local footPart
+
+local function HRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function IsAlive()
+    local char = Player.Character
+    if not char then return false end
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    return hum and hum.Health > 0
+end
+
+-- ===== ANTI FALL =====
+local function ensureFootPart()
+    if footPart then return end
+    footPart = Instance.new("Part")
+    footPart.Size = Vector3.new(6, 1, 6)
+    footPart.Anchored = true
+    footPart.CanCollide = true
+    footPart.Transparency = 1
+    footPart.Name = "AntiFallPart"
+    footPart.Parent = workspace
+end
+
+local function updateFootPart()
+    if footPart then
+        footPart.CFrame = HRP().CFrame * CFrame.new(0, -3.5, 0)
+    end
+end
+
+local function removeFootPart()
+    if footPart then
+        footPart:Destroy()
+        footPart = nil
+    end
+end
+
+-- ===== STOP =====
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    removeFootPart()
+end
+
+-- ===== TWEEN =====
+local function tweenTo(pos)
+    if not IsAlive() then return false end
+
+    ensureFootPart()
+    local hrp = HRP()
+    local dist = (hrp.Position - pos).Magnitude
+    local time = math.max(dist / tweenSpeed, 0.1)
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        { CFrame = CFrame.new(pos) }
+    )
+
+    local conn
+    conn = RunService.Heartbeat:Connect(function()
+        if not loopActive then
+            conn:Disconnect()
+            return
+        end
+        updateFootPart()
+    end)
+
+    tween:Play()
+    tween.Completed:Wait()
+
+    if conn then conn:Disconnect() end
+    updateFootPart()
+
+    return IsAlive()
+end
+
+-- ===== ROUTE =====
+local function runRoute()
+    for _, pos in ipairs(Targets) do
+        if not loopActive then return end
+        if not tweenTo(pos) then return end
+        task.wait(delayValue)
+    end
+end
+
+-- ===== ONE TIME =====
+local function runOnce(delayBefore)
+    stopAll()
+    task.spawn(function()
+        if delayBefore > 0 then task.wait(delayBefore) end
+        loopActive = true
+        runRoute()
+        stopAll()
+    end)
+end
+
+-- ===== LOOP =====
+local function startLoop()
+    stopAll()
+    loopActive = true
+
+    task.spawn(function()
+        while loopActive do
+            if not IsAlive() then
+                removeFootPart()
+                Player.CharacterAdded:Wait()
+                task.wait(1)
+                ensureFootPart()
+            end
+
+            runRoute()
+            if not loopActive then return end
+
+            local waited = 0
+            while waited < routeCooldown do
+                if not loopActive then return end
+                task.wait(0.2)
+                waited += 0.2
+            end
+
+            if loopEndTime and os.clock() >= loopEndTime then
+                stopAll()
+                return
+            end
+        end
+    end)
+end
+
+-- ===== UI MODES =====
+local Modes = {
+    ["One-Time | Normal"] = function()
+        delayValue = 0.4
+        runOnce(0.4)
+    end,
+    ["One-Time | Fast"] = function()
+        delayValue = 0.15
+        runOnce(0.15)
+    end,
+    ["One-Time | Super Fast"] = function()
+        delayValue = 0
+        runOnce(0)
+    end,
+    ["Loop | Normal Loop"] = function()
+        delayValue = 0.4
+        startLoop()
+    end,
+    ["Loop | Fast Loop"] = function()
+        delayValue = 0.15
+        startLoop()
+    end,
+    ["Loop | Safe Loop"] = function()
+        delayValue = 1
+        startLoop()
+    end,
+    ["Time | Run 30 Seconds"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+    end,
+    ["Time | Run 1 Minute"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+    end,
+    ["System | Stop All"] = function()
+        stopAll()
+    end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    table.insert(Options, k)
+end
+table.sort(Options)
+
+MountsTab:Dropdown({
+    Title = "Auto CheckPoint",
+    Desc = "Select Mode",
+    Values = Options,
+    Max = 1,
+    Callback = function(v)
+        local action = Modes[v]
+        if action then
+            action()
+        end
+    end
+})
+
+local MountsSection = Window:Section({
+    Title = "Win",
+})
+
+local MountsTab = MountsSection:Tab({
+    Title = "Auto Win",
+    Icon = "map-pin",
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local TARGET = CFrame.new(4990.470, 213.134, 51.477)
+
+local loopActive = false
+local loopConn
+local loopEndTime
+local delayValue = 0.3
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleportOnce(d)
+    stopAll()
+    if d > 0 then
+        task.wait(d)
+    end
+    HRP().CFrame = TARGET
+end
+
+local function startLoop()
+    stopAll()
+    loopActive = true
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loopActive then return end
+
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopAll()
+            return
+        end
+
+        HRP().CFrame = TARGET
+
+        if delayValue > 0 then
+            task.wait(delayValue)
+        end
+    end)
+end
+
+local Modes = {
+    ["One-Time | Normal"] = function()
+        teleportOnce(0.4)
+    end,
+
+    ["One-Time | Fast"] = function()
+        teleportOnce(0.15)
+    end,
+
+    ["One-Time | Super Fast"] = function()
+        teleportOnce(0)
+    end,
+
+    ["Loop | Normal Loop"] = function()
+        delayValue = 0.4
+        startLoop()
+    end,
+
+    ["Loop | Fast Loop"] = function()
+        delayValue = 0.15
+        startLoop()
+    end,
+
+    ["Loop | Safe Loop"] = function()
+        delayValue = 1
+        startLoop()
+    end,
+
+    ["Time | Run 30 Seconds"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+    end,
+
+    ["Time | Run 1 Minute"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+    end,
+
+    ["Stability | Safe Mode"] = function()
+        delayValue = 1.2
+        startLoop()
+    end,
+
+    ["Performance | Light Mode"] = function()
+        delayValue = 0.6
+        startLoop()
+    end,
+
+    ["Performance | Normal Mode"] = function()
+        delayValue = 0.3
+        startLoop()
+    end,
+
+    ["AFK | AFK Mode"] = function()
+        delayValue = 0
+        startLoop()
+    end,
+
+    ["System | Stop All"] = function()
+        stopAll()
+    end,
+}
+
+local Options = {}
+for name in pairs(Modes) do
+    table.insert(Options, name)
+end
+table.sort(Options)
+
+MountsTab:Dropdown({
+    Title = "Auto Win",
+    Desc = "Select Mode",
+    Values = Options,
+    Max = 1,
+    Callback = function(v)
+        local action = Modes[v]
+        if action then
+            action()
+        end
+    end
+})
+
+local MountsSection = Window:Section({
+    Title = "Rebirth",
+})
+
+local MountsTab = MountsSection:Tab({
+    Title = "Auto Rebirth",
+    Icon = "map-pin",
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local rebirthConn
+
+local function fireRebirth()
+    ReplicatedStorage.Network.Rebirth.AttemptRebirth:FireServer()
+end
+
+MountsTab:Dropdown({
+    Title = "Rebirth Mode",
+    Desc = "Select Mode",
+    Values = {
+        "Once",
+        "Loop",
+        "Stop Loop"
+    },
+    Max = 1,
+    Callback = function(selected)
+
+        if selected == "Once" then
+            fireRebirth()
+
+        elseif selected == "Loop" then
+
+            if rebirthConn then
+                rebirthConn:Disconnect()
+            end
+
+            rebirthConn = RunService.Heartbeat:Connect(function()
+                fireRebirth()
+            end)
+
+        elseif selected == "Stop Loop" then
+
+            if rebirthConn then
+                rebirthConn:Disconnect()
+                rebirthConn = nil
+            end
+
+        end
+
+    end
+})
