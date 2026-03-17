@@ -1,0 +1,133 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Poppy Playtime")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function auto(n)
+    local posAkhir = CFrame.new(29.596, 3.175, 28.098)
+
+    local f = workspace:FindFirstChild("ItemSpawns")
+        and workspace.ItemSpawns:FindFirstChild(tostring(n))
+
+    if f then
+        local item = f:FindFirstChild("SpawnedItem")
+        if item then
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+end
+
+Main:Button("Auto Secret And Mythical", function() auto(8) end)
+Main:Button("Auto Legendary", function() auto(6) end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local collect = slot:FindFirstChild("CollectTouch")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            firetouchinterest(hrp, collect, 1)
+                        end
+                    end
+                end
+            end
+
+        end
+    end
+end
+
+Main:Button("Auto Collect Money", function()
+    collectAll()
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Main:Button("Purchase Jump +2", function()
+    ReplicatedStorage.Events.PurchaseJump:FireServer(2)
+end)
+
+Main:Button("Purchase Jump +10", function()
+    ReplicatedStorage.Events.PurchaseJump:FireServer(10)
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("VIP And Disasters")
+
+local function del(obj)
+    if obj then
+        obj:Destroy()
+    end
+end
+
+Main:Button("Remove VIP", function()
+    del(workspace:FindFirstChild("VIP"))
+end)
+
+Main:Button("Remove Disasters", function()
+    del(workspace:FindFirstChild("Disasters"))
+end)
