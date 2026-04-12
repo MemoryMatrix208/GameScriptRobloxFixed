@@ -1,0 +1,154 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Poppy Playtime")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect(folderName)
+    local posAkhir = CFrame.new(-62.251, 3.225, 39.501)
+
+    local folder = workspace:FindFirstChild("ItemSpawners")
+    if not folder then return end
+
+    local targetFolder = folder:FindFirstChild(folderName)
+    if not targetFolder then return end
+
+    local item = targetFolder:FindFirstChild("SpawnedItem")
+    if not item then return end
+
+    local targetCF
+
+    if item:IsA("Model") then
+        targetCF = item:GetPivot()
+    elseif item:IsA("BasePart") then
+        targetCF = item.CFrame
+    end
+
+    if targetCF then
+        tp(targetCF + Vector3.new(0,3,0))
+        task.wait(0.25)
+
+        local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait(0.25)
+        tp(posAkhir)
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto SuperCritters", "Collect SuperCritters", function()
+    collect("SuperCritters")
+end)
+
+Azure:CreateButton(mainTab, "Auto Secret", "Collect Secret", function()
+    collect("Secret")
+end)
+
+Azure:CreateButton(mainTab, "Auto Rare", "Collect Rare", function()
+    collect("Rare")
+end)
+
+Azure:CreateButton(mainTab, "Auto Prismatic", "Collect Prismatic", function()
+    collect("Prismatic")
+end)
+
+Azure:CreateButton(mainTab, "Auto Mythical", "Collect Mythical", function()
+    collect("Mythical")
+end)
+
+Azure:CreateButton(mainTab, "Auto Legendary", "Collect Legendary", function()
+    collect("Legendary")
+end)
+
+Azure:CreateButton(mainTab, "Auto Experiments", "Collect Experiments", function()
+    collect("Experiments")
+end)
+
+Azure:CreateButton(mainTab, "Auto Exclusive", "Collect Exclusive", function()
+    collect("Exclusive")
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local button = slot:FindFirstChild("Button")
+                        if button then
+                            local touch = button:FindFirstChild("Touch")
+                            if touch and touch:IsA("BasePart") then
+                                firetouchinterest(hrp, touch, 0)
+                                task.wait()
+                                firetouchinterest(hrp, touch, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local mainTab = gui:Tab("Money")
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Collect all money", function()
+    collectAll()
+end)
+
+local mainTab = gui:Tab("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Purchase Speed +1", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +5", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +10", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Carry", "Upgrade carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Azure:CreateButton(mainTab, "Purchase Base Upgrade", "Upgrade base", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Auto Rebirth", "Rebirth", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local mainTab = gui:Tab("Sell Inventory")
+
+Azure:CreateButton(mainTab, "Sell Inventory", "Sell items", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
