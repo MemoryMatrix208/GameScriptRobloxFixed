@@ -1,0 +1,234 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(400, 400),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Escape Tsunami for Phones"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Phone", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function tp(cf)
+    local c=p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame=cf
+end
+
+local function collect(name)
+    local endPos=CFrame.new(25.129,3.225,42.797)
+    local sp=workspace:FindFirstChild("ItemSpawners")
+    if not sp then return end
+
+    for _,v in pairs(sp:GetChildren())do
+        if v.Name==name then
+            local item=v:FindFirstChild("SpawnedItem")
+            if item and item:IsA("Model") then
+                local part=item:FindFirstChildWhichIsA("BasePart")
+                if part then
+                    tp(part.CFrame+Vector3.new(0,2,0))
+                    task.wait(.1)
+                    local pr=item:FindFirstChildWhichIsA("ProximityPrompt",true)
+                    if pr then
+                        for i=1,2 do fireproximityprompt(pr)task.wait(.1)end
+                    end
+                end
+            end
+        end
+    end
+
+    tp(endPos)
+end
+
+local rarities={
+    {"Divine",Color3.fromRGB(0,255,255)},
+    {"Celestial",Color3.fromRGB(0,255,255)},
+    {"Divine",Color3.fromRGB(0,255,255)},
+    {"Exotic",Color3.fromRGB(0,255,255)},
+    {"Secret",Color3.fromRGB(0,255,255)},
+    {"Mythical",Color3.fromRGB(0,255,255)},
+    {"Legendary",Color3.fromRGB(0,255,255)}
+}
+
+for _,v in pairs(rarities)do
+    Window:AddButton(MainTab,"Auto "..v[1],"Collect","rbxassetid://125367160504472",function()
+        collect(v[1])
+        Window:Notify({
+            Title=v[1],
+            Description="Done",
+            Content="Collected",
+            Color=v[2],
+            Delay=3
+        })
+    end)
+end
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+local rs=game:GetService("RunService")
+
+local mode=0 -- 0=Once,1=Loop,2=Stop
+local conn
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    for _,plot in pairs(workspace:GetChildren())do
+        if plot:IsA("Model") and plot.Name:find("Plot_") then
+            for _,floor in pairs(plot:GetChildren())do
+                if floor.Name:find("Floor") then
+                    local slots=floor:FindFirstChild("Slots")
+                    if slots then
+                        for _,slot in pairs(slots:GetChildren())do
+                            local t=slot:FindFirstChild("CollectTouch")
+                            if t then
+                                r.CFrame=t.CFrame+Vector3.new(0,2,0)
+                                task.wait(.05)
+                                firetouchinterest(r,t,0)
+                                firetouchinterest(r,t,1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function startLoop()
+    if conn then conn:Disconnect() end
+    conn=rs.Heartbeat:Connect(function()
+        collect()
+        task.wait(.3)
+    end)
+end
+
+local function stopLoop()
+    if conn then conn:Disconnect() conn=nil end
+end
+
+Window:AddButton(MainTab,"Auto Collect Money","Mode","rbxassetid://125367160504472",function()
+    mode=(mode+1)%3
+
+    if mode==0 then
+        stopLoop()
+        collect()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Once",
+            Content="Collected once",
+            Color=Color3.fromRGB(0, 255, 255),
+            Delay=2
+        })
+
+    elseif mode==1 then
+        startLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Loop",
+            Content="Auto farming...",
+            Color=Color3.fromRGB(0, 255, 255),
+            Delay=2
+        })
+
+    else
+        stopLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Stop",
+            Content="Stopped",
+            Color=Color3.fromRGB(0, 255, 255),
+            Delay=2
+        })
+    end
+end)
+
+local MainTab = Window:CreateTab("Upgrade", "rbxassetid://125367160504472")
+
+local ev=game:GetService("ReplicatedStorage"):WaitForChild("Events")
+
+Window:AddButton(MainTab,"Buy Speed x1","Purchase","rbxassetid://125367160504472",function()
+    pcall(function() ev.PurchaseSpeed:FireServer(1) end)
+end)
+
+Window:AddButton(MainTab,"Buy Speed x5","Purchase","rbxassetid://125367160504472",function()
+    pcall(function() ev.PurchaseSpeed:FireServer(5) end)
+end)
+
+Window:AddButton(MainTab,"Buy Speed x10","Purchase","rbxassetid://125367160504472",function()
+    pcall(function() ev.PurchaseSpeed:FireServer(10) end)
+end)
+
+Window:AddButton(MainTab,"Upgrade Base","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() ev.RequestBaseUpgrade:FireServer() end)
+end)
+
+Window:AddButton(MainTab,"Buy Carry","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() ev.PurchaseCarry:FireServer() end)
+end)
+
+local MainTab = Window:CreateTab("Inventory", "rbxassetid://125367160504472")
+
+Window:AddButton(MainTab,"Sell Inventory","Sell","rbxassetid://125367160504472",function()
+    pcall(function() ev.RequestSell:FireServer("Inventory") end)
+end)
+
+local MainTab = Window:CreateTab("Rebirth", "rbxassetid://125367160504472")
+
+local ev=game:GetService("ReplicatedStorage"):WaitForChild("Events")
+
+Window:AddButton(MainTab,"Click","Rebirth","rbxassetid://125367160504472",function()
+    pcall(function()
+        ev.RequestRebirth:FireServer()
+    end)
+
+    Window:Notify({
+        Title="Rebirth",
+        Description="Success",
+        Content="Rebirth",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local MainTab = Window:CreateTab("Tsunami & VIP", "rbxassetid://125367160504472")
+
+Window:AddButton(MainTab,"Remove Tsunami & VIP","Delete","rbxassetid://125367160504472",function()
+    pcall(function()
+        local w=workspace
+        
+        if w:FindFirstChild("Tsunamis") then
+            w.Tsunamis:Destroy()
+        end
+        
+        if w:FindFirstChild("VIP") then
+            w.VIP:Destroy()
+        end
+    end)
+
+    Window:Notify({
+        Title="Remove",
+        Description="Done",
+        Content="Tsunamis & VIP deleted",
+        Color=Color3.fromRGB(0, 255, 255),
+        Delay=3
+    })
+end)
