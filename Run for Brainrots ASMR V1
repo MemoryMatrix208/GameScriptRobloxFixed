@@ -1,0 +1,772 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(400, 400),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Run for Brainrots ASMR"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Brainrots", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-12.258, 3.980, -6990.211)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid10")
+        and workspace.Map.MainMap.Hub.StageLava.acid10:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Ungodly Red","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Ungodly Red",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-23.473, 3.980, -5907.472)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid9")
+        and workspace.Map.MainMap.Hub.StageLava.acid9:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Ungodly Rainbow","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Ungodly",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-3.469, 3.980, -5015.973)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid8")
+        and workspace.Map.MainMap.Hub.StageLava.acid8:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Godly","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Godly",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-4.763, 3.980, -4110.950)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid7")
+        and workspace.Map.MainMap.Hub.StageLava.acid7:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Secret","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Secret",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(2.833, 3.980, -2400.142)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid5")
+        and workspace.Map.MainMap.Hub.StageLava.acid5:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Mythical","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Mythical",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-5.463, 1.996, -3210.604)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid6")
+        and workspace.Map.MainMap.Hub.StageLava.acid1:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Legendary","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Legendary",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-6.487, 3.980, -1774.830)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid4")
+        and workspace.Map.MainMap.Hub.StageLava.acid4:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Epic","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Epic",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-3.602, 3.980, -1191.779)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid3")
+        and workspace.Map.MainMap.Hub.StageLava.acid3:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Rare","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Rare",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+
+    local startPos=CFrame.new(-0.520,3.980,-785.311)
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid2")
+        and workspace.Map.MainMap.Hub.StageLava.acid2:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    
+    r.CFrame=startPos
+    task.wait(.2)
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(0.25)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+        end
+    end
+
+    
+    r.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Uncommon","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Uncommon",
+        Description="Done",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function tp(cf)
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local hrp=tp()
+    local endPos=CFrame.new(-17.993,4.775,-73.255)
+
+    local br=workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("MainMap")
+        and workspace.Map.MainMap:FindFirstChild("Hub")
+        and workspace.Map.MainMap.Hub:FindFirstChild("StageLava")
+        and workspace.Map.MainMap.Hub.StageLava:FindFirstChild("acid1")
+        and workspace.Map.MainMap.Hub.StageLava.acid1:FindFirstChild("Brainrots")
+
+    if not br then return end
+
+    for _,m in pairs(br:GetChildren())do
+        if m:IsA("Model") then
+            
+            local part=m.PrimaryPart or m:FindFirstChildWhichIsA("BasePart")
+            if part then
+                hrp.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(.09)
+
+                local pr=m:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(hrp,part,0)
+                    firetouchinterest(hrp,part,1)
+                end
+            end
+
+        end
+    end
+
+    hrp.CFrame=endPos
+end
+
+Window:AddButton(MainTab,"Auto Common","Collect","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Common",
+        Description="Done",
+        Content="Collected all",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local MainTab = Window:CreateTab("VIP", "rbxassetid://125367160504472")
+
+Window:AddButton(MainTab,"Bypass Vip Doors","","rbxassetid://125367160504472",function()
+    local b=workspace:FindFirstChild("Barriers")
+    if not b then return end
+    local v=b:FindFirstChild("VipDoors")
+    if not v then return end
+    for _,x in ipairs(v:GetDescendants())do
+        if x:IsA("BasePart")then
+            x.CanCollide=false
+            x.Transparency=1
+        end
+    end
+    v:Destroy()
+    Window:Notify({
+        Title="Vip Doors",
+        Description="Done",
+        Content="Bypassed",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+local rs=game:GetService("RunService")
+
+local mode=0
+local conn
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function getMyPlot()
+    local plots=workspace:FindFirstChild("PlotSystem")
+        and workspace.PlotSystem:FindFirstChild("Plots")
+    if not plots then return end
+
+    return plots:FindFirstChild(p.Name)
+end
+
+local function collect()
+    local r=hrp()
+    local plot=getMyPlot()
+    if not plot then return end
+
+    local stands=plot:FindFirstChild("Stands")
+    if not stands then return end
+
+    for _,stand in pairs(stands:GetChildren())do
+        local claim=stand:FindFirstChild("Claim")
+        if claim and claim:IsA("Model") then
+            
+            local part=claim.PrimaryPart or claim:FindFirstChildWhichIsA("BasePart")
+            if part then
+                r.CFrame=part.CFrame+Vector3.new(0,2,0)
+                task.wait(.05)
+
+                local pr=claim:FindFirstChildWhichIsA("ProximityPrompt",true)
+                if pr then
+                    fireproximityprompt(pr)
+                else
+                    firetouchinterest(r,part,0)
+                    firetouchinterest(r,part,1)
+                end
+            end
+
+        end
+    end
+end
+
+local function startLoop()
+    if conn then conn:Disconnect() end
+    conn=rs.Heartbeat:Connect(function()
+        collect()
+        task.wait(.3)
+    end)
+end
+
+local function stopLoop()
+    if conn then conn:Disconnect() conn=nil end
+end
+
+Window:AddButton(MainTab,"Auto Collect Money","Mode","rbxassetid://125367160504472",function()
+    mode=(mode+1)%3
+
+    if mode==0 then
+        stopLoop()
+        collect()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Once",
+            Content="Collect your plot",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    elseif mode==1 then
+        startLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Loop",
+            Content="Auto Collect your plot...",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    else
+        stopLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Stop",
+            Content="Stopped",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+    end
+end)
+
+local rs=game:GetService("ReplicatedStorage")
+
+local UpgradeTab=Window:CreateTab("Upgrade","rbxassetid://125367160504472")
+
+Window:AddButton(UpgradeTab,"Speed x1","Buy","rbxassetid://125367160504472",function()
+    pcall(function() rs.BuySpeedUpgrade:FireServer("1") end)
+end)
+
+Window:AddButton(UpgradeTab,"Speed x2","Buy","rbxassetid://125367160504472",function()
+    pcall(function() rs.BuySpeedUpgrade:FireServer("2") end)
+end)
+
+Window:AddButton(UpgradeTab,"Speed x3","Buy","rbxassetid://125367160504472",function()
+    pcall(function() rs.BuySpeedUpgrade:FireServer("3") end)
+end)
+
+Window:AddButton(UpgradeTab,"Power Upgrade","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rs.BuyPowerUpgradeRemote:FireServer() end)
+end)
+
+Window:AddButton(UpgradeTab,"Plot Upgrade","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rs.Remotes.PlotUpgradeRemote:FireServer() end)
+end)
+
+local InventoryTab=Window:CreateTab("Inventory","rbxassetid://125367160504472")
+
+Window:AddButton(InventoryTab,"Sell All","Sell","rbxassetid://125367160504472",function()
+    pcall(function() rs.Remotes.SellItemEvent:FireServer("ALL") end)
+end)
+
+local RebirthTab=Window:CreateTab("Rebirth","rbxassetid://125367160504472")
+
+Window:AddButton(RebirthTab,"Click","Rebirth","rbxassetid://125367160504472",function()
+    pcall(function() rs.RebirthRemote:FireServer() end)
+
+    Window:Notify({
+        Title="Rebirth",
+        Description="Success",
+        Content="Rebirth Success",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
