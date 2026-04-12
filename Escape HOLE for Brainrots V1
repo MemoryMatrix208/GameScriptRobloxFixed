@@ -1,0 +1,143 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Brainrots")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect(folderName, startPos)
+    local posAkhir = CFrame.new(284.293, 34.240, 551.376)
+
+    local folder = workspace:FindFirstChild("SpawnableItemsRuntime")
+    if not folder then return end
+
+    local rarity = folder:FindFirstChild(folderName)
+    if not rarity then return end
+
+    if startPos then
+        tp(startPos)
+        task.wait(0.25)
+    end
+
+    for _, item in pairs(rarity:GetChildren()) do
+        if item:IsA("Model") then
+            local targetCF = item:GetPivot()
+
+            tp(targetCF + Vector3.new(0,3,0))
+            task.wait(0.25)
+
+            local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.25)
+            tp(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Mythic", "Collect Mythic", function()
+    collect("Mythic")
+end)
+
+Azure:CreateButton(mainTab, "Auto Legendary", "Collect Legendary", function()
+    collect("Legendary")
+end)
+
+Azure:CreateButton(mainTab, "Auto God", "Collect God", function()
+    collect("God", CFrame.new(325.889, 33.885, -2314.325))
+end)
+
+Azure:CreateButton(mainTab, "Auto Secret", "Collect Secret", function()
+    collect("Secret", CFrame.new(321.231, 34.240, -1405.046))
+end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local mainTab = gui:Tab("Upgrade Shop")
+
+Azure:CreateButton(mainTab, "Purchase Speed +1", "Buy speed", function()
+    ReplicatedStorage.Events.RemoteFunctions.PurchaseUpgrade:InvokeServer("Speed", 1)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +10", "Buy speed", function()
+    ReplicatedStorage.Events.RemoteFunctions.PurchaseUpgrade:InvokeServer("Speed", 10)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Carry", "Upgrade carry", function()
+    ReplicatedStorage.Events.RemoteFunctions.PurchaseUpgrade:InvokeServer("Carry", 1)
+end)
+
+Azure:CreateButton(mainTab, "Upgrade Base", "Upgrade base", function()
+    ReplicatedStorage.Events.RemoteFunctions.UpgradeBase:InvokeServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Rebirth", "Rebirth character", function()
+    ReplicatedStorage.Events.RemoteFunctions.Rebirth:InvokeServer()
+end)
+
+local mainTab = gui:Tab("Sell")
+
+Azure:CreateButton(mainTab, "Sell All Brainrots", "Sell inventory", function()
+    ReplicatedStorage.Events.RemoteFunctions.SellAllBrainrots:InvokeServer()
+end)
+
+local mainTab = gui:Tab("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function collect()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local bases = workspace:FindFirstChild("Bases")
+    if not bases then return end
+
+    for _, base in pairs(bases:GetChildren()) do
+        local floors = base:FindFirstChild("Floors")
+        if floors then
+            for _, floor in pairs(floors:GetChildren()) do
+                local slots = floor:FindFirstChild("Slots")
+                if slots then
+                    for _, slot in pairs(slots:GetChildren()) do
+                        local touch = slot:FindFirstChild("TouchZone")
+                        if touch and touch:IsA("BasePart") then
+                            firetouchinterest(hrp, touch, 0)
+                            firetouchinterest(hrp, touch, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Collect Money", function()
+    collect()
+end)
+
+local function del(obj)
+    if obj then
+        obj:Destroy()
+    end
+end
+
+local mainTab = gui:Tab("Remove")
+
+Azure:CreateButton(mainTab, "Remove VIP", "Delete VIP", function()
+    del(workspace:FindFirstChild("VIPZones"))
+end)
